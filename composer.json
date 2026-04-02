@@ -1,0 +1,18 @@
+{
+  "name": "pylon/arcos-cli",
+  "description": "ARCOS CLI - developer tooling for ARCOS projects",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Arcos\\Cli\\": "src/"
+    }
+  },
+  "bin": [
+    "bin/arcos",
+    "bin/arcos.bat"
+  ]
+}
