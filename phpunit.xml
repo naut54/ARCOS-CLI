@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         failOnWarning="true"
+         failOnDeprecation="false">
+    <testsuites>
+        <testsuite name="unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="support">
+            <directory>tests/Support</directory>
+        </testsuite>
+        <testsuite name="fixtures">
+            <directory>tests/Fixtures</directory>
+            <!-- tests/Fixtures/sample-project/vendor is a symlink to the real
+                 vendor/ (borrowed so the fixture project doesn't need its own
+                 install) — excluded so the recursive directory scan doesn't
+                 walk into PHPUnit's own source through the symlink. -->
+            <exclude>tests/Fixtures/sample-project/vendor</exclude>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>src</directory>
+        </include>
+    </source>
+</phpunit>

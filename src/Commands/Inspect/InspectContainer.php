@@ -33,7 +33,7 @@ class InspectContainer extends Command
         }
 
         $content  = file_get_contents($indexPath);
-        $bindings = $this->parseBindings($content);
+        $bindings = self::parseBindings($content);
 
         Output::header('Container bindings');
         Output::line();
@@ -64,7 +64,7 @@ class InspectContainer extends Command
      *
      * @return array<int, array{type: string, class: string, factory: string}>
      */
-    private function parseBindings(string $content): array
+    public static function parseBindings(string $content): array
     {
         $bindings = [];
 
@@ -80,8 +80,8 @@ class InspectContainer extends Command
             $factory = trim($match[3]); // the fn() => ... expression
 
             // Resolve short class name to fully qualified if a use statement exists
-            $fqcn    = $this->resolveClass($class, $content);
-            $factory = $this->summarizeFactory($factory);
+            $fqcn    = self::resolveClass($class, $content);
+            $factory = self::summarizeFactory($factory);
 
             $bindings[] = [
                 'type'    => $type,
@@ -96,7 +96,7 @@ class InspectContainer extends Command
     /**
      * Try to resolve a short class name to its FQCN using use statements in index.php.
      */
-    private function resolveClass(string $class, string $content): string
+    public static function resolveClass(string $class, string $content): string
     {
         // Already fully qualified (contains backslash)
         if (str_contains($class, '\\')) {
@@ -122,7 +122,7 @@ class InspectContainer extends Command
      * fn($c) => new ProductsController($c->make(InventoryService::class))
      *   → new ProductsController(...)
      */
-    private function summarizeFactory(string $factory): string
+    public static function summarizeFactory(string $factory): string
     {
         // Strip the fn($c) => prefix
         $factory = preg_replace('/^fn\s*\([^)]*\)\s*=>\s*/', '', $factory);

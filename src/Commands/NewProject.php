@@ -383,10 +383,11 @@ return function (Router $router): void {
         // new MiddlewareLink(LoggerMiddleware::class, isMandatory: true, canHaveGroup: false),
     ]);
 
-    // Groups
-    // $router->group('api', [
-    //     new MiddlewareLink(VerbValidationMiddleware::class),
-    // ]);
+    // Groups — 'api' must stay defined (even empty) since index.php's
+    // registerSubdomain() references it via middlewareGroups.
+    $router->group('api', [
+        // new MiddlewareLink(VerbValidationMiddleware::class),
+    ]);
 };
 PHP;
     }

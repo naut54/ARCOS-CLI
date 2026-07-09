@@ -78,16 +78,13 @@ try {
         throw new RuntimeException("index.php not found at [{$indexPath}].");
     }
 
-    // Execute index.php in the project root's scope.
-    // $router must be available in the global scope after this include.
-    (static function () use ($indexPath): void {
-        include $indexPath;
-    })();
-
-    // index.php must have set $router in its own scope and made it accessible.
-    // Because index.php runs as a plain include (not a function), $router is in
-    // the global scope. We retrieve it explicitly.
-    global $router;
+    // Execute index.php directly at this script's top level (not wrapped in a
+    // function/closure) — a wrapped include runs in the wrapper's local scope,
+    // so a variable index.php assigns (like $router) would vanish once the
+    // wrapper returns instead of landing in the global scope this script reads
+    // from next. This script is never included by anything else, so nothing
+    // here collides with what index.php assigns.
+    include $indexPath;
 
     if (!isset($router) || !($router instanceof \Arcos\Core\Routing\Router)) {
         throw new RuntimeException(

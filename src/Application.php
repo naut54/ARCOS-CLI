@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Arcos\Cli;
 
 use Arcos\Cli\IO\Output;
+use Arcos\Cli\Commands\Doctor;
 use Arcos\Cli\Commands\NewProject;
 use Arcos\Cli\Commands\Make\MakeController;
 use Arcos\Cli\Commands\Make\MakeService;
@@ -21,6 +22,7 @@ class Application
 {
     private const array COMMANDS = [
         'new'                => NewProject::class,
+        'doctor'             => Doctor::class,
         'make:controller'    => MakeController::class,
         'make:service'       => MakeService::class,
         'make:middleware'    => MakeMiddleware::class,
