@@ -3,7 +3,15 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../vendor/autoload.php';
+// When installed as a dependency (global install, or a project's require-dev),
+// Composer's generated proxy in vendor/bin/ sets this to the consuming
+// project's real vendor/autoload.php. Fall back to our own vendor/ when this
+// script is run directly from within the arcos-cli repo itself.
+if (isset($GLOBALS['_composer_autoload_path'])) {
+    require_once $GLOBALS['_composer_autoload_path'];
+} else {
+    require_once __DIR__ . '/../vendor/autoload.php';
+}
 
 use Arcos\Cli\Application;
 
